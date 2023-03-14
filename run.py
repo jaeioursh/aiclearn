@@ -1,7 +1,7 @@
 from aic.aic import aic
-from aic.parameter import parameter
+from tests import test1
 
 
 
-p=parameter()
+p=test1()
 env=aic(p)
