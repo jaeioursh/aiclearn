@@ -11,7 +11,7 @@ class test1(parameter):
     param_idx = 0  # Makes it easy to differentiate results by parameter set
     desc="test1"
     
-    n_agents = 5
+    n_agents = 1
     battery = 30
     time_steps = 50
     speed = 2.0
