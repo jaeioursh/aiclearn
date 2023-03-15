@@ -165,7 +165,8 @@ cdef class Evo_MLP:
         
 
         
-        
+def one_agent(input_shape,num_outputs,num_units):
+    return Evo_MLP(input_shape,num_outputs,num_units)        
 
 def initCcea(input_shape, num_outputs, num_units=16,num_types=10):
     def initCceaGo(data):

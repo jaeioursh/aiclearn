@@ -49,7 +49,7 @@ for i in range(100000):
         A.append([np.argmax(act[:-3]),act[-3],act[-2],act[-1]])
         env.action([act])
     g=sum(env.G())
-    print(g,i)
+    
     idx=pol2idx(A)
 
     info=arry[idx]
@@ -58,6 +58,7 @@ for i in range(100000):
         arry[idx]=(params,g)
 
     if i%1000==0:
+        print(i)
         with open("save/a.pkl","wb") as f:
             pickle.dump( arry,f)
 

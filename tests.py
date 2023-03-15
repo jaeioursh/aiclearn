@@ -12,7 +12,7 @@ class test1(parameter):
     desc="test1"
     
     n_agents = 1
-    battery = 30
+    battery = 5
     time_steps = 50
     speed = 2.0
     map_size = 30
