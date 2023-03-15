@@ -35,7 +35,7 @@ shape=(env.action_size()-3,100)
 arry=gen_dict(shape)
 
 
-for i in range(100000):
+for i in range(200000):
     env.reset()
     A=[]
     if i>0:
