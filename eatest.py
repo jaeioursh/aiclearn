@@ -1,4 +1,5 @@
 from aic.parameter import parameter
+from tests import test2
 from aic.aic import aic
 import pyximport
 import tqdm
@@ -6,6 +7,7 @@ import numpy as np
 from aic.view import view
 pyximport.install()
 from teaming.cceamtl import *
+import matplotlib.pyplot as plt 
 
 def display(data,env,n_steps,team):
     assignBestCceaPolicies(data,team)
@@ -15,13 +17,13 @@ def display(data,env,n_steps,team):
         S=env.state()
         A=[]
         for s,pol in zip(S,pols):
-            A.append((pol.get_action(s)+1)/2)
+            A.append((np.array(pol.get_action(s))+1)/2)
         env.action(A)
         g=sum(env.G())
         view(env,j,g)
-def test():
+def test(reward_type,disp=0):
 
-    p=parameter()
+    p=test2()
     env=aic(p)
     data=dict()
     data['Number of Agents']=p.n_agents
@@ -31,7 +33,8 @@ def test():
     data['Number of Policies']=data['Trains per Episode']
     initCcea(input_shape=env.state_size(), num_outputs=env.action_size(), num_units=20,num_types=p.n_agents)(data)
 
-    gens=tqdm.trange(200)
+    gens=tqdm.trange(5)
+    info=[]
     for generation in gens:
         G=[]
         for i in range(data['Trains per Episode']):
@@ -47,15 +50,25 @@ def test():
                 env.action(A)
             g=sum(env.G())
             d=np.sum(env.D(),axis=1)
-            data["Agent Rewards"]=[g]*p.n_agents
-            data["Agent Rewards"]=d
+            if reward_type=="g":
+                data["Agent Rewards"]=[g]*p.n_agents
+            else:
+                data["Agent Rewards"]=d
 
             rewardCceaPolicies(data,team)
             G.append(g)
         evolveCceaPolicies(data,team)
-        if generation%250==249:
+        if generation%250==-249:
             display(data,env,p.time_steps,team)
+        info.append(max(G))
         gens.set_description("G:" +str(max(G)))
-
+    if disp:
+        plt.ioff()
+        if reward_type=="g":
+            plt.title("G")
+        else:
+            plt.title("D")
+        plt.plot(info)
+        plt.show()
 if __name__ == "__main__":
-    test()
+    test("g",1)
