@@ -33,7 +33,7 @@ def test(reward_type,disp=0):
     data['Number of Policies']=data['Trains per Episode']
     initCcea(input_shape=env.state_size(), num_outputs=env.action_size(), num_units=20,num_types=p.n_agents)(data)
 
-    gens=tqdm.trange(5)
+    gens=tqdm.trange(1000)
     info=[]
     for generation in gens:
         G=[]
@@ -63,7 +63,7 @@ def test(reward_type,disp=0):
         info.append(max(G))
         gens.set_description("G:" +str(max(G)))
     if disp:
-        plt.ioff()
+
         if reward_type=="g":
             plt.title("G")
         else:

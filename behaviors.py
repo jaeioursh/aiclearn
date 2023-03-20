@@ -26,16 +26,18 @@ def pol2idx(info):
 def pick(arry):
     vals=arry[arry!=None]
     return np.random.choice(vals,1)[0]
-
-env=aic(test1())
-
+param=test1()
+env=aic(param)
+env.reset()
+print(env.agents[0].x)
+print(param.agent_pos)
 agent=one_agent(env.state_size(),env.action_size(),20)
 
 shape=(env.action_size()-3,100)
 arry=gen_dict(shape)
 
 
-for i in range(200000):
+for i in range(1000000):
     env.reset()
     A=[]
     if i>0:
@@ -60,5 +62,5 @@ for i in range(200000):
     if i%1000==0:
         print(i)
         with open("save/a.pkl","wb") as f:
-            pickle.dump( arry,f)
+            pickle.dump( [arry,param],f)
 
