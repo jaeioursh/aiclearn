@@ -17,7 +17,9 @@ def gen_dict(shape):
 
 def pol2idx(info):
     idx=[]
-    idx.append(stats.mode([i[0] for i in info]).mode[0])
+    counts=np.bincount([i[0] for i in info],weights=[i[1] for i in info])
+    idx.append(np.argmax(counts))
+    #idx.append(stats.mode([i[0] for i in info]).mode[0])
     #for j in range(1,4):
     #    idx.append(int(np.mean([i[j] for i in info])*0.9999*10))
     idx.append(int(np.sum([ np.mean([i[j] for i in info])*0.9999*33 for j in range(1,4)])))
@@ -50,6 +52,8 @@ for i in range(1000000):
         act=(np.array(agent.get_action(S))+1)/2
         A.append([np.argmax(act[:-3]),act[-3],act[-2],act[-1]])
         env.action([act])
+        if env.agents[0].battery<0.001:
+            break
     g=sum(env.G())
     
     idx=pol2idx(A)

@@ -21,8 +21,6 @@ print(p)
 agent=one_agent(env.state_size(),env.action_size(),20)
 
 
-
-
 mp=[[0.0 if a is None else a[1] for a in arr] for arr in arry]
 fig1=plt.figure(1)
 
@@ -64,13 +62,12 @@ def test(event):
 
     plt.xlim([-2, env.params.map_size + 2])
     plt.ylim([-2, env.params.map_size + 2])
-    plt.title(str(g)+" "+str(r))
+    plt.title(str(g)+"\n"+str(r))
     fig2.canvas.draw()
     
 kind="button_press_event"
 #kind="motion_notify_event"
 fig1.canvas.mpl_connect(kind, test)
-
 
 
 plt.show()
